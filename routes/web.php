@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\FrontController;
+use App\Http\Controllers\BackendController;
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::get('home', [FrontController::class, 'index'])->name('home');
-Route::get('portfolio_details', [FrontController::class, 'portfolioDetails'])->name('portfolio_details');
+Route::get('/', [FrontendController::class, 'index'])->name('index');
+Route::get('home', [FrontendController::class, 'index'])->name('home');
+Route::get('portfolio_details', [FrontendController::class, 'portfolioDetails'])->name('portfolio_details');
+Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+Route::get('login', [BackendController::class, 'loginPage'])->name('login');
+Route::post('login', [BackendController::class, 'login'])->name('login');
+Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
+Route::post('signup', [BackendController::class, 'signup'])->name('signup');
 
