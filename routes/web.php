@@ -22,9 +22,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('home', [FrontendController::class, 'index'])->name('home');
 Route::get('portfolio_details', [FrontendController::class, 'portfolioDetails'])->name('portfolio_details');
-Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+
+Route::middleware(['checkSessionData'])->group(function () {
+    Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+});
+Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
 Route::get('login', [BackendController::class, 'loginPage'])->name('login');
 Route::post('login', [BackendController::class, 'login'])->name('login');
-Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
 Route::post('signup', [BackendController::class, 'signup'])->name('signup');
+Route::get('logout', [BackendController::class, 'logout'])->name('logout');
+Route::get('verification/{id}', [BackendController::class, 'verification']);
+Route::post('verified',[BackendController::class,'verifiedOtp'])->name('verifiedOtp');
+Route::get('resend-otp',[BackendController::class,'resendOtp'])->name('resendOtp');
 

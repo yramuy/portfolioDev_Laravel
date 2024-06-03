@@ -30,7 +30,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item">
+                <a href={{ route('logout') }} class="dropdown-item">
                     <i class="fa fa-address-book mr-2" aria-hidden="true"></i> Logout
                 </a>
                 <div class="dropdown-divider"></div>

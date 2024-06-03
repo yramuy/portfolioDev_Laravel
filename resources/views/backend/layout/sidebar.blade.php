@@ -32,7 +32,7 @@ $url = explode('/', $current_url);
             <div class="info">
 
                 <a href="#" class="d-block">
-
+                    {{ auth()->user()->name }}
                 </a>
             </div>
         </div>

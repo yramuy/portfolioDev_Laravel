@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
+    <title>{{config('app.name')}}</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="btn ml-5">
                     <button type="submit" name="btn_login" class="btn btn-success" id="btnLogin">Save</button>
-                    <button type="button" name="btn_signup" class="btn btn-default" id="btnSignup">Cancel</button>
+                    <button type="button" name="btn_cancel" class="btn btn-default" id="btn_cancel">Cancel</button>
 
                 </div>
 
@@ -137,8 +137,8 @@
     }, 3000);
 
     $(document).ready(function() {
-        $('#btnSignup').click(function() {
-
+        $('#btn_cancel').click(function() {
+            window.location = "{{ route('login') }}";
         });
     });
 </script>
