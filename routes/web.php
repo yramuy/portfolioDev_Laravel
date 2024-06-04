@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\SideNavController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,4 +35,7 @@ Route::get('logout', [BackendController::class, 'logout'])->name('logout');
 Route::get('verification/{id}', [BackendController::class, 'verification']);
 Route::post('verified',[BackendController::class,'verifiedOtp'])->name('verifiedOtp');
 Route::get('resend-otp',[BackendController::class,'resendOtp'])->name('resendOtp');
+
+// SideNav Routes
+Route::get('about', [SideNavController::class, 'aboutPage'])->name('about');
 

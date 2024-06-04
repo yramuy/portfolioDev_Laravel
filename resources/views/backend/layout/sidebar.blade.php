@@ -73,7 +73,7 @@ $url = explode('/', $current_url);
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link <?php echo $url[3] == 'user' ? 'active' : ''; ?>">
+                    <a href={{ route('about')}} class="nav-link <?php echo $url[3] == 'about' ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-address-card"></i>
                         <p>
                             About

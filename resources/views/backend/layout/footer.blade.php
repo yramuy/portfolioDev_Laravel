@@ -49,6 +49,8 @@
 <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
 
+<script src="{{ asset('dist/js/ckeditor/ckeditor.js') }}"></script>
+
 {{-- <script>
     $(function() {
 
@@ -99,3 +101,9 @@
 
 
 </script>
+
+<script>
+    $(function() {
+      CKEDITOR.replace('long_text');
+    });
+  </script>
