@@ -38,4 +38,6 @@ Route::get('resend-otp',[BackendController::class,'resendOtp'])->name('resendOtp
 
 // SideNav Routes
 Route::get('about', [SideNavController::class, 'aboutPage'])->name('about');
+Route::post('about', [SideNavController::class, 'saveAbout'])->name('about');
+Route::get('deleteSkill', [SideNavController::class, 'deleteSkill'])->name('deleteSkill');
 

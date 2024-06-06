@@ -51,59 +51,46 @@
 
 <script src="{{ asset('dist/js/ckeditor/ckeditor.js') }}"></script>
 
-{{-- <script>
-    $(function() {
-
-        $('#category_form').validate({
-            rules: {
-                category: {
-                    required: true,
-                    minlength: 3
-                },
-            },
-            messages: {
-                category: {
-                    required: "Please enter a category"
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-</script> --}}
 <script>
     $(document).ready(function() {
         window.setTimeout(function() {
-            $("#autoCloseAlert").alert('close');
+            $(".autoCloseAlert").alert('close');
         }, 3000);
 
-        // loadCategories();
 
-        // function loadCategories() {
-        //     $.ajax({
-        //         url: "http://127.0.0.1:8000/api/category/list",
-        //         type: "GET",
-        //         success: function(response) {
-        //             console.log(response)
-        //         }
-        //     });
-        // }
+
+    });
+</script>
+<script>
+    $(function() {
+        $('#addSkill').click(function() {
+            $('#skillDiv').append(
+                "<div class='form-group row removeDiv'><input type='hidden' name='skill_id[]'' value='0'><div class='col-sm-6'><input type='text' class='form-control' name='skill[]'' placeholder='Skill Name'></div><div class='col-sm-3.5'><input type='number' class='form-control' name='percentage[]' placeholder='Percentage'></div><div class='col-sm-2'><button type='button' class='btn btn-danger remove-btn'>-</button></div></div>"
+            );
+        });
+
+        $('#skillDiv').on('click', '.remove-btn', function() {
+            $(this).closest(".removeDiv").remove();
+
+        })
     });
 
-
+    function deleteSkill(id) {
+        $.ajax({
+            url: "{{ route('deleteSkill') }}",
+            type: "GET",
+            data: {
+                skillId: id
+            },
+            success: function(res) {
+                location.reload();
+            }
+        });
+    }
 </script>
 
 <script>
     $(function() {
-      CKEDITOR.replace('long_text');
+        CKEDITOR.replace('long_text');
     });
-  </script>
+</script>

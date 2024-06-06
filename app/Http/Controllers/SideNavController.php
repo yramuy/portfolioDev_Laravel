@@ -2,12 +2,105 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Skill;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class SideNavController extends Controller
 {
     //
-     public function aboutPage() {
-        return view('backend.pages.about');
-     }
+    public function aboutPage()
+    {
+        $profile = About::first();
+        $skills = Skill::all();
+        return view('backend.pages.about', compact('profile', 'skills'));
+    }
+
+    public function saveAbout(Request $request)
+    {
+        // Validation Rules
+
+        if ($request->profile_id) {
+            $fileRules = '';
+        } else {
+            $fileRules = 'required|file|mimes:jpg,png';
+        }
+
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email',
+            'profile' => 'required',
+            'phone' => 'required',
+            'long_text' => 'required',
+            'profile_image' => $fileRules
+        ];
+
+        // Create a validator instance and check if the validation fails
+
+        $validator = FacadesValidator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            // Handle the validation failure
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            if ($request->hasFile('profile_image')) {
+                $file = $request->file('profile_image');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+            }
+
+            if ($request->profile_id) {
+                $aboutObj = About::find($request->profile_id);
+                if (($aboutObj->id != '' && $request->hasFile('profile_image'))) {
+                    $aboutObj->profile_image = $fileName;
+                } else {
+                    $fileName1 = $aboutObj->profile_image;
+                    $aboutObj->profile_image = $fileName1;
+                }
+            } else {
+                $aboutObj = new About();
+                $aboutObj->profile_image = $fileName;
+            }
+            $aboutObj->name = $request->name;
+            $aboutObj->email = $request->email;
+            $aboutObj->profile = $request->profile;
+            $aboutObj->phone = $request->phone;
+            $aboutObj->long_text = $request->long_text;
+
+            $aboutObj->save();
+
+            if (($aboutObj->id != '' && $request->hasFile('profile_image'))) {
+                $request->file('profile_image')->storeAs('uploads', $fileName, 'public');
+            }
+            $id = $aboutObj->id;
+            $skillData = $request->skill;
+            $percentage = $request->percentage;
+
+
+            if (!empty($skillData)) {
+                for ($i = 0; $i < sizeof($skillData); $i++) {
+                    if ($request->skill_id[$i]) {
+                        $skillObj = Skill::find($request->skill_id[$i]);
+                    } else {
+                        $skillObj = new Skill();
+                    }
+
+                    $skillObj->profile_id = $id;
+                    $skillObj->skill_name = $skillData[$i];
+                    $skillObj->percentage = $percentage[$i];
+                    $skillObj->save();
+                }
+            }
+
+            return back()->with('success', 'Data saved successfully.');
+        }
+    }
+
+    public function deleteSkill(Request $request)
+    {
+        $skill = Skill::find($request->skillId);
+        $skill->delete();
+        return back()->with('success', 'Skill deleted successfully.');
+    }
 }

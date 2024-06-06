@@ -12,7 +12,7 @@
             <a href="#" class="nav-link">Contact</a>
         </li>
         @if (session('success'))
-            <div class="alert alert-success" id="autoCloseAlert">{{ session('success') }}</div>
+            <div class="alert alert-success autoCloseAlert">{{ session('success') }}</div>
         @endif
     </ul>
 
