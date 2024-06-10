@@ -9,40 +9,22 @@
                 <div class="row">
                   <div class="col-sm-6 col-md-5">
                     <div class="about-img">
-                      <img src="{{ asset('assets/img/my_img2.jpeg') }}" class="img-fluid rounded b-shadow-a" alt="">
+                        <div id="image-container"></div>
+                      {{-- <img id="myImage" src="{{ asset('storage/uploads/1717671927_my_img.jpeg')}}" class="img-fluid rounded b-shadow-a" alt=""> --}}
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-7">
                     <div class="about-info">
-                      <p><span class="title-s">Name: </span> <span>Ramu Yerramsetti</span></p>
-                      <p><span class="title-s">Profile: </span> <span>Full stack developer</span></p>
-                      <p><span class="title-s">Email: </span> <span>ramuy77290@gmail.com</span></p>
-                      <p><span class="title-s">Phone: </span> <span>7729070810</span></p>
+                      <p><span class="title-s">Name: </span> <span id="nameVal"></span></p>
+                      <p><span class="title-s">Profile: </span> <span id="profileVal"></span></p>
+                      <p><span class="title-s">Email: </span> <span id="emailVal"></span></p>
+                      <p><span class="title-s">Phone: </span> <span id="phoneVal"></span></p>
                     </div>
                   </div>
                 </div>
                 <div class="skill-mf">
                   <p class="title-s">Skill</p>
-                  <span>HTML</span> <span class="pull-right">85%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span>CSS3</span> <span class="pull-right">75%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span>PHP</span> <span class="pull-right">100%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span>Mysql</span> <span class="pull-right">90%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span>JAVASCRIPT</span> <span class="pull-right">90%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                    <div id="skillList"></div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -53,21 +35,9 @@
                     </h5>
                   </div>
                   <p class="lead">
-                    Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur arcu erat, accumsan id
-                    imperdiet et, porttitor
-                    at sem. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Nulla
-                    porttitor accumsan tincidunt.
+                    <span id="longTextVal"></span>
                   </p>
-                  <p class="lead">
-                    Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vivamus suscipit tortor eget felis
-                    porttitor volutpat. Vestibulum
-                    ac diam sit amet quam vehicula elementum sed sit amet dui. porttitor at sem.
-                  </p>
-                  <p class="lead">
-                    Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
-                    Nulla porttitor accumsan
-                    tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                  </p>
+
                 </div>
               </div>
             </div>

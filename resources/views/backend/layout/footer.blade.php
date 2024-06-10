@@ -56,9 +56,6 @@
         window.setTimeout(function() {
             $(".autoCloseAlert").alert('close');
         }, 3000);
-
-
-
     });
 </script>
 <script>
