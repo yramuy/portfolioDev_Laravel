@@ -62,7 +62,7 @@
                       $('#image-container').html('<img src="' + imageUrl +
                           '" alt="Description of the image" class="img-fluid rounded b-shadow-a">'
                       );
-                    //   $('#skillList').html();
+
                       for (let index = 0; index < data2.length; index++) {
                           $('#skillList').append('<span>' + data2[index].skill_name +
                               '</span> <span class="pull-right">' + data2[index].percentage +

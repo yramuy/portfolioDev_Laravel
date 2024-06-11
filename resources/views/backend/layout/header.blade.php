@@ -35,6 +35,14 @@
         a {
             color: white;
         }
+
+        .modal-content {
+            width: 142%;
+        }
+
+        .star{
+            color: red;
+        }
     </style>
 
 </head>

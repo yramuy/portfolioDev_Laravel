@@ -103,4 +103,9 @@ class SideNavController extends Controller
         $skill->delete();
         return back()->with('success', 'Skill deleted successfully.');
     }
+
+    public function ServiceList() {
+        return view('backend.pages.services');
+    }
+
 }
