@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Service;
 use App\Models\Skill;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
@@ -104,8 +105,42 @@ class SideNavController extends Controller
         return back()->with('success', 'Skill deleted successfully.');
     }
 
-    public function ServiceList() {
+    public function ServicePage()
+    {
         return view('backend.pages.services');
     }
 
+    public function saveService(Request $request)
+    {
+        $title = $request->title;
+        $description = $request->description;
+        $icon = $request->file('icon');
+        $fileName = time() . '_' . $icon->getClientOriginalName();
+
+        $service = new Service();
+        $service->title = $title;
+        $service->description = $description;
+        $service->icon_name = $fileName;
+        $service->save();
+
+        $request->file('icon')->storeAs('uploads', $fileName, 'public');
+
+        return response()->json(['success' => 'Service saved successfully']);
+    }
+
+    public function ServiceList()
+    {
+        $services = Service::all();
+
+        return response()->json(['services' => $services]);
+    }
+
+    public function serviceData(Request $request)
+    {
+        $id = $request->serviceId;
+
+        $service = Service::find($id);
+
+        return response()->json(['service' => $service]);
+    }
 }

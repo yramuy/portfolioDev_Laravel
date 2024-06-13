@@ -81,7 +81,7 @@ $url = explode('/', $current_url);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('services')}}" class="nav-link <?php echo $url[3] == 'services' ? 'active' : ''; ?>">
+                    <a href="{{ route('service')}}" class="nav-link <?php echo $url[3] == 'service' ? 'active' : ''; ?>">
                         <i class="nav-icon fab fa-servicestack"></i>
                         <p>
                             Services

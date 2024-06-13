@@ -22,6 +22,7 @@
 
         <!-- Main content -->
         <section class="content">
+            <span id="success-msg"></span>
             <div class="container-fluid">
 
                 <div class="card card-info">
@@ -42,7 +43,7 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="service-body">
 
                             </tbody>
                         </table>
@@ -59,13 +60,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Services</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close" >
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="" id="Services_form">
+                    <form method="post" id="Services_form" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
+                            <input type="hidden" id="service_id" name="service_id" value="0">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Title <em
                                         class="star">*</em></label>
@@ -78,8 +80,13 @@
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Description <em
                                         class="star">*</em></label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="description" name="description" value=""
-                                        placeholder="Description" rows="4"></textarea>
+                                    <textarea class="form-control" id="description" name="description" value="" placeholder="Description"
+                                        rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+
+                                <div id="image-container" style="margin-left: 8em;">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -92,8 +99,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn-service">Save</button>
+                            <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>

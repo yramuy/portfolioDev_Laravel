@@ -44,4 +44,7 @@ Route::post('about', [SideNavController::class, 'saveAbout'])->name('about');
 Route::get('deleteSkill', [SideNavController::class, 'deleteSkill'])->name('deleteSkill');
 
 // Services
+Route::get('service', [SideNavController::class, 'ServicePage'])->name('service');
 Route::get('services', [SideNavController::class, 'ServiceList'])->name('services');
+Route::post('services', [SideNavController::class, 'saveService'])->name('services');
+Route::get('serviceData', [SideNavController::class, 'serviceData'])->name('serviceData');

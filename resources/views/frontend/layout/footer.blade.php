@@ -24,6 +24,9 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
           class="bi bi-arrow-up-short"></i></a>
 
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
   <!-- Vendor JS Files -->
   <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -35,8 +38,7 @@
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
-  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
 
   <script>
       $(function() {
@@ -77,5 +79,6 @@
                   }
               });
           }
+
       });
   </script>

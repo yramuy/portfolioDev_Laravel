@@ -32,7 +32,7 @@
             margin-left: 10em;
         }
 
-        a {
+        a1 {
             color: white;
         }
 
@@ -42,6 +42,10 @@
 
         .star{
             color: red;
+        }
+
+        #title-error, #description-error, #icon-error {
+            margin-left: 18%;
         }
     </style>
 

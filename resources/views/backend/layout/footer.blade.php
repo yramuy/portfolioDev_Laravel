@@ -56,10 +56,13 @@
         window.setTimeout(function() {
             $(".autoCloseAlert").alert('close');
         }, 3000);
+
+
     });
 </script>
 <script>
     $(function() {
+
         $('#addSkill').click(function() {
             $('#skillDiv').append(
                 "<div class='form-group row removeDiv'><input type='hidden' name='skill_id[]'' value='0'><div class='col-sm-6'><input type='text' class='form-control' name='skill[]'' placeholder='Skill Name'></div><div class='col-sm-3.5'><input type='number' class='form-control' name='percentage[]' placeholder='Percentage'></div><div class='col-sm-2'><button type='button' class='btn btn-danger remove-btn'>-</button></div></div>"
@@ -70,7 +73,147 @@
             $(this).closest(".removeDiv").remove();
 
         })
+
+        // JS Validations
+
+        $('#btn-service').click(function() {
+            $('#Services_form').submit();
+            return false;
+        });
+
+        $('#Services_form').validate({
+            submitHandler: function() {
+                saveService();
+            },
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                description: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 1000
+                },
+                icon: {
+                    required: true
+                }
+            },
+
+            messages: {
+                title: {
+                    required: "Please enter a title",
+                    minlength: "Title must be at least 3 charactrs long",
+                    maxlength: "Title must be less than 100 characters long"
+                },
+                description: {
+                    required: "Please enter a description",
+                    minlength: "Description must be at least 5 charactrs long",
+                    maxlength: "Description must be less than 1000 characters long"
+                },
+                icon: {
+                    required: "Please choose a image"
+                }
+            },
+
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        function saveService() {
+            var formData = new FormData($('#Services_form')[0]);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('services') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.success) {
+                        LoadServices();
+                        $('#success-msg').html('<div class="alert alert-success autoCloseAlert">' +
+                            response.success + '</div>');
+                        $('#serviceModal').modal('hide');
+                        window.setTimeout(function() {
+                            $(".autoCloseAlert").alert('close');
+                        }, 3000);
+                    }
+                },
+
+            });
+        }
+
+        LoadServices();
+
+        function LoadServices() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('services') }}",
+                success: function(response) {
+                    var service = response.services;
+                    $('#service-body').html('');
+                    if (service.length > 0) {
+                        for (let index = 0; index < service.length; index++) {
+                            $('#service-body').append('<tr><td>' + (index + 1) + '</td><td>' +
+                                service[index].title + '</td><td>' + service[index]
+                                .description + '</td><td>' + service[index].icon_name +
+                                '</td><td><a href="javascript:void(0)" class="btn btn-info btn-edit" data-edit-id=' +
+                                service[index].id +
+                                ' data-toggle="modal" data-target="#serviceModal"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger ml-2 btn-delete" data-delete-id=' +
+                                service[index].id +
+                                '><i class="fas fa-trash"></i></a></td></tr>');
+                        }
+                    } else {
+                        $('#service-body').append('<tr><td colspan="5">No data found!</td></tr>');
+                    }
+
+                    // console.log(response.services)
+                }
+            });
+        }
+
+        $('#service-body').on('click', '.btn-edit', function() {
+            var id = $(this).attr('data-edit-id');
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('serviceData') }}",
+                data: {
+                    serviceId: id
+                },
+                success: function(response) {
+                    var data = response.service;
+                    $('#service_id').val(data.id);
+                    $('#title').val(data.title);
+                    $('#description').val(data.description);
+                    var path = "{{ asset('storage/uploads') }}/" + data.icon_name;
+                    $('#image-container').html('<img src="' + path +
+                        '" style="width:100%; height:10em;">');
+
+                }
+            });
+        });
+
+        $('.btn-close').click(function() {
+            $('#image-container').html('');
+            $('#Services_form')[0].reset(); // This will reset the form
+
+        });
+
     });
+
+
 
     function deleteSkill(id) {
         $.ajax({
