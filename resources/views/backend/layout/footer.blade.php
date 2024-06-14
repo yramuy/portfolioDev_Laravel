@@ -142,7 +142,7 @@
                 success: function(response) {
                     if (response.success) {
                         LoadServices();
-                        $('#success-msg').html('<div class="alert alert-success autoCloseAlert">' +
+                        $('#success-msg').html('<div class="alert alert-info autoCloseAlert" role="alert">' +
                             response.success + '</div>');
                         $('#serviceModal').modal('hide');
                         window.setTimeout(function() {

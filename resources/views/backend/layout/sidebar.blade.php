@@ -32,7 +32,9 @@ $url = explode('/', $current_url);
             <div class="info">
 
                 <a href="#" class="d-block">
-                    {{ auth()->user()->name }}
+                    @if (session()->has('email'))
+                        {{ auth()->user()->name }}
+                    @endif
                 </a>
             </div>
         </div>
@@ -73,7 +75,7 @@ $url = explode('/', $current_url);
                 </li>
 
                 <li class="nav-item">
-                    <a href={{ route('about')}} class="nav-link <?php echo $url[3] == 'about' ? 'active' : ''; ?>">
+                    <a href={{ route('about') }} class="nav-link <?php echo $url[3] == 'about' ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-address-card"></i>
                         <p>
                             About
@@ -81,7 +83,7 @@ $url = explode('/', $current_url);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('service')}}" class="nav-link <?php echo $url[3] == 'service' ? 'active' : ''; ?>">
+                    <a href="{{ route('service') }}" class="nav-link <?php echo $url[3] == 'service' ? 'active' : ''; ?>">
                         <i class="nav-icon fab fa-servicestack"></i>
                         <p>
                             Services

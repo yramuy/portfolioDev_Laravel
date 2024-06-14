@@ -1,3 +1,9 @@
+@if (!session()->has('email'))
+    <script>
+        window.location = "{{ route('login')}}";
+    </script>
+@endif
+
 <html>
 
 <body class="hold-transition sidebar-mini layout-fixed">

@@ -52,6 +52,7 @@
                       console.log(response)
                       var data1 = response.profile;
                       var data2 = response.skills;
+                      var services = response.services;
                       $('#nameVal').html(data1.name);
                       $('#profileVal').html(data1.profile);
                       $('#emailVal').html(data1.email);
