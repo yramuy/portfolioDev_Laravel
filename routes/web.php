@@ -48,3 +48,4 @@ Route::get('service', [SideNavController::class, 'ServicePage'])->name('service'
 Route::get('services', [SideNavController::class, 'ServiceList'])->name('services');
 Route::post('services', [SideNavController::class, 'saveService'])->name('services');
 Route::get('serviceData', [SideNavController::class, 'serviceData'])->name('serviceData');
+Route::get('delete-service', [SideNavController::class, 'deleteService'])->name('delete-service');

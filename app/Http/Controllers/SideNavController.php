@@ -113,19 +113,39 @@ class SideNavController extends Controller
     public function saveService(Request $request)
     {
         $title = $request->title;
+        $serviceId = $request->service_id;
         $description = $request->description;
-        $icon = $request->file('icon');
-        $fileName = time() . '_' . $icon->getClientOriginalName();
 
-        $service = new Service();
+        if ($request->hasFile('icon')) {
+            $icon = $request->file('icon');
+            $fileName = time() . '_' . $icon->getClientOriginalName();
+        }
+
+        if (empty($serviceId)) {
+            $service = new Service();
+            $service->icon_name = $fileName;
+        } else {
+            $service = Service::find($serviceId);
+            if ($request->hasFile('icon')) {
+                $service->icon_name = $fileName;
+            } else {
+                $img = $service->icon_name;
+                $service->icon_name = $img;
+            }
+        }
+
         $service->title = $title;
         $service->description = $description;
-        $service->icon_name = $fileName;
+
         $service->save();
 
-        $request->file('icon')->storeAs('uploads', $fileName, 'public');
+        if ($request->hasFile('icon')) {
+            $request->file('icon')->storeAs('uploads', $fileName, 'public');
+        }
 
-        return response()->json(['success' => 'Service saved successfully']);
+        $message = $serviceId ? "Service updated successfully" : "Service saved successfully";
+
+        return response()->json(['success' => $message]);
     }
 
     public function ServiceList()
@@ -142,5 +162,12 @@ class SideNavController extends Controller
         $service = Service::find($id);
 
         return response()->json(['service' => $service]);
+    }
+
+    public function deleteService(Request $request)
+    {
+        $service = Service::find($request->serviceId);
+        $service->delete();
+        return response()->json(['success' => "Service deleted successfully"]);
     }
 }

@@ -31,7 +31,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <a class="btn btn-primary float-right" data-toggle="modal" data-target="#serviceModal">Add
+                        <a class="btn btn-primary float-right" data-toggle="modal1" data-target="#serviceModal1" id="add-service">Add
                             Service</a>
                         <table id="example1" class="table table-bordered table-striped mt-5">
                             <thead>
@@ -59,7 +59,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Services</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Service</h5>
                         <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close" >
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -106,5 +106,28 @@
                 </div>
             </div>
         </div>
+
+        {{-- Delete Model --}}
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this <span id="service-title"></span>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection

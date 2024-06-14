@@ -96,9 +96,9 @@
                     minlength: 5,
                     maxlength: 1000
                 },
-                icon: {
-                    required: true
-                }
+                // icon: {
+                //     required: true
+                // }
             },
 
             messages: {
@@ -112,9 +112,9 @@
                     minlength: "Description must be at least 5 charactrs long",
                     maxlength: "Description must be less than 1000 characters long"
                 },
-                icon: {
-                    required: "Please choose a image"
-                }
+                // icon: {
+                //     required: "Please choose a image"
+                // }
             },
 
             errorElement: 'span',
@@ -170,7 +170,7 @@
                                 .description + '</td><td>' + service[index].icon_name +
                                 '</td><td><a href="javascript:void(0)" class="btn btn-info btn-edit" data-edit-id=' +
                                 service[index].id +
-                                ' data-toggle="modal" data-target="#serviceModal"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger ml-2 btn-delete" data-delete-id=' +
+                                ' data-toggle="modal1" data-target="#serviceModal1"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger ml-2 btn-delete" data-service-title='+ service[index].title +' data-delete-id=' +
                                 service[index].id +
                                 '><i class="fas fa-trash"></i></a></td></tr>');
                         }
@@ -183,9 +183,24 @@
             });
         }
 
-        $('#service-body').on('click', '.btn-edit', function() {
-            var id = $(this).attr('data-edit-id');
+        $('#add-service').click(function() {
+            $('#serviceModal').modal('show');
+            $('#exampleModalLabel').text('Add Service');
+            $('#btn-service').text('Save');
+            $('#icon').attr('required', true);
+            $('#image-container').html('');
+            $('#service_id').val(0);
+            $('#Services_form')[0].reset(); // This will reset the form
+        });
 
+        $('#service-body').on('click', '.btn-edit', function() {
+
+            $('#serviceModal').modal('show');
+
+            $('#exampleModalLabel').text('Update Service');
+            $('#btn-service').text('Update');
+
+            var id = $(this).attr('data-edit-id');
             $.ajax({
                 type: "GET",
                 url: "{{ route('serviceData') }}",
@@ -206,9 +221,40 @@
         });
 
         $('.btn-close').click(function() {
+            $('#exampleModalLabel').text('Add Service');
+            $('#btn-service').text('Save');
             $('#image-container').html('');
             $('#Services_form')[0].reset(); // This will reset the form
 
+        });
+        let deleteId;
+        $('#service-body').on('click', '.btn-delete', function() {
+            deleteId = $(this).attr('data-delete-id');
+            let serviceTitle = $(this).attr('data-service-title');
+            $('#deleteModal').modal('show');
+            $('#service-title').text(serviceTitle);
+        });
+
+        $('#confirmDeleteButton').click(function() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('delete-service') }}",
+                data: {
+                    serviceId: deleteId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        LoadServices();
+                        $('#success-msg').html(
+                            '<div class="alert alert-success autoCloseAlert">' +
+                            response.success + '</div>');
+                        $('#deleteModal').modal('hide');
+                        window.setTimeout(function() {
+                            $(".autoCloseAlert").alert('close');
+                        }, 3000);
+                    }
+                }
+            });
         });
 
     });
