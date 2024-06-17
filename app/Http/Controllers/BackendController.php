@@ -29,9 +29,18 @@ class BackendController extends Controller
         $input = $request->validated();
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->put('email', $input['email']);
-            return redirect()->intended(route('dashboard'));
+
+            $admin = Auth::guard('admin')->user();
+
+            if ($admin->role == 1) {
+                return redirect()->route('dashboard');
+            } else {
+                $this->logout();
+                return redirect(route('login'))->with('error', 'You are not authorized to access admin panel.');
+            }
+
         } else {
             return redirect(route('login'))->with('error', 'Login details are not valid');
         }
@@ -153,7 +162,7 @@ class BackendController extends Controller
         // Flush all session data
 
         session()->flush();
-        Auth::logout();
+        Auth::guard('admin')->logout();
         return redirect(route('login'));
     }
 }

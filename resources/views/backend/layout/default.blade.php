@@ -1,8 +1,8 @@
-@if (!session()->has('email'))
+{{-- @if (!session()->has('email'))
     <script>
         window.location = "{{ route('login')}}";
     </script>
-@endif
+@endif --}}
 
 <html>
 

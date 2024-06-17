@@ -24,28 +24,36 @@ Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('home', [FrontendController::class, 'index'])->name('home');
 Route::get('portfolio_details', [FrontendController::class, 'portfolioDetails'])->name('portfolio_details');
 
-Route::middleware(['checkSessionData'])->group(function () {
-    Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+// Route::middleware(['checkSessionData'])->group(function () {
+//     Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+// });
+
+
+Route::group(['middleware' => 'admin.guest'], function () {
+    Route::get('login', [BackendController::class, 'loginPage'])->name('login');
+    Route::post('login', [BackendController::class, 'login'])->name('login');
 });
-Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
-Route::get('login', [BackendController::class, 'loginPage'])->name('login');
-Route::post('login', [BackendController::class, 'login'])->name('login');
-Route::post('signup', [BackendController::class, 'signup'])->name('signup');
-Route::get('logout', [BackendController::class, 'logout'])->name('logout');
-Route::get('verification/{id}', [BackendController::class, 'verification']);
-Route::post('verified',[BackendController::class,'verifiedOtp'])->name('verifiedOtp');
-Route::get('resend-otp',[BackendController::class,'resendOtp'])->name('resendOtp');
 
-// SideNav Routes
+Route::group(['middleware' => 'admin.auth'], function () {
+    Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
+    Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
 
-// About
-Route::get('about', [SideNavController::class, 'aboutPage'])->name('about');
-Route::post('about', [SideNavController::class, 'saveAbout'])->name('about');
-Route::get('deleteSkill', [SideNavController::class, 'deleteSkill'])->name('deleteSkill');
+    Route::post('signup', [BackendController::class, 'signup'])->name('signup');
+    Route::get('logout', [BackendController::class, 'logout'])->name('logout');
+    Route::get('verification/{id}', [BackendController::class, 'verification']);
+    Route::post('verified', [BackendController::class, 'verifiedOtp'])->name('verifiedOtp');
+    Route::get('resend-otp', [BackendController::class, 'resendOtp'])->name('resendOtp');
+    // SideNav Routes
 
-// Services
-Route::get('service', [SideNavController::class, 'ServicePage'])->name('service');
-Route::get('services', [SideNavController::class, 'ServiceList'])->name('services');
-Route::post('services', [SideNavController::class, 'saveService'])->name('services');
-Route::get('serviceData', [SideNavController::class, 'serviceData'])->name('serviceData');
-Route::get('delete-service', [SideNavController::class, 'deleteService'])->name('delete-service');
+    // About
+    Route::get('about', [SideNavController::class, 'aboutPage'])->name('about');
+    Route::post('about', [SideNavController::class, 'saveAbout'])->name('about');
+    Route::get('deleteSkill', [SideNavController::class, 'deleteSkill'])->name('deleteSkill');
+
+    // Services
+    Route::get('service', [SideNavController::class, 'ServicePage'])->name('service');
+    Route::get('services', [SideNavController::class, 'ServiceList'])->name('services');
+    Route::post('services', [SideNavController::class, 'saveService'])->name('services');
+    Route::get('serviceData', [SideNavController::class, 'serviceData'])->name('serviceData');
+    Route::get('delete-service', [SideNavController::class, 'deleteService'])->name('delete-service');
+});

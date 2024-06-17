@@ -12,6 +12,12 @@ class ApiController extends Controller
     {
         $profile = About::first();
         $skills = Skill::all();
-        return response()->json(array('status' => 200, 'profile' => $profile, 'skills' => $skills));
+        $response = [
+            'status' => 200,
+            'message' => 'Details',
+            'profile' => $profile,
+            'skills' => $skills
+        ];
+        return response()->json($response);
     }
 }
