@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SideNavController;
 use Illuminate\Support\Facades\Route;
@@ -32,13 +33,12 @@ Route::get('portfolio_details', [FrontendController::class, 'portfolioDetails'])
 Route::group(['middleware' => 'admin.guest'], function () {
     Route::get('login', [BackendController::class, 'loginPage'])->name('login');
     Route::post('login', [BackendController::class, 'login'])->name('login');
+    Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
+    Route::post('signup', [BackendController::class, 'signup'])->name('signup');
 });
 
 Route::group(['middleware' => 'admin.auth'], function () {
     Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
-    Route::get('signup', [BackendController::class, 'signupPage'])->name('signup');
-
-    Route::post('signup', [BackendController::class, 'signup'])->name('signup');
     Route::get('logout', [BackendController::class, 'logout'])->name('logout');
     Route::get('verification/{id}', [BackendController::class, 'verification']);
     Route::post('verified', [BackendController::class, 'verifiedOtp'])->name('verifiedOtp');
@@ -56,4 +56,11 @@ Route::group(['middleware' => 'admin.auth'], function () {
     Route::post('services', [SideNavController::class, 'saveService'])->name('services');
     Route::get('serviceData', [SideNavController::class, 'serviceData'])->name('serviceData');
     Route::get('delete-service', [SideNavController::class, 'deleteService'])->name('delete-service');
+
+    // Blog
+    Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('blogs/store', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('blogs/edit/{id}', [BlogController::class, 'create'])->name('blogs.edit');
+    Route::get('blogs/delete', [BlogController::class, 'delete'])->name('blogs.delete');
 });

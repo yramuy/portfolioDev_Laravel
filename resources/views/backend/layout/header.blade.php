@@ -1,6 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', '') }}</title>
 
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,8 +23,8 @@
     <link href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/portfolio.css') }}">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet"> --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+
 
     <style>
         #category-error {
@@ -57,6 +58,12 @@
             /* Use the light background color */
             color: white;
             /* Keep the info text color */
+        }
+
+        .wrap-text {
+            width: 200px; /* Set a width for the container */
+            border: 1px solid #000; /* Optional: for visibility */
+            word-wrap: break-word; /* This is the property for word wrapping */
         }
     </style>
 

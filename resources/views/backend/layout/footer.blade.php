@@ -51,6 +51,13 @@
 
 <script src="{{ asset('dist/js/ckeditor/ckeditor.js') }}"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+
+
 <script>
     $(document).ready(function() {
         window.setTimeout(function() {
@@ -62,6 +69,12 @@
 </script>
 <script>
     $(function() {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         $('#addSkill').click(function() {
             $('#skillDiv').append(
@@ -142,7 +155,8 @@
                 success: function(response) {
                     if (response.success) {
                         LoadServices();
-                        $('#success-msg').html('<div class="alert alert-info autoCloseAlert" role="alert">' +
+                        $('#success-msg').html(
+                            '<div class="alert alert-info autoCloseAlert" role="alert">' +
                             response.success + '</div>');
                         $('#serviceModal').modal('hide');
                         window.setTimeout(function() {
@@ -170,7 +184,8 @@
                                 .description + '</td><td>' + service[index].icon_name +
                                 '</td><td><a href="javascript:void(0)" class="btn btn-info btn-edit" data-edit-id=' +
                                 service[index].id +
-                                ' data-toggle="modal1" data-target="#serviceModal1"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger ml-2 btn-delete" data-service-title='+ service[index].title +' data-delete-id=' +
+                                ' data-toggle="modal1" data-target="#serviceModal1"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger ml-2 btn-delete" data-service-title=' +
+                                service[index].title + ' data-delete-id=' +
                                 service[index].id +
                                 '><i class="fas fa-trash"></i></a></td></tr>');
                         }
@@ -259,8 +274,91 @@
 
     });
 
+    $('#example').DataTable();
 
 
+    $('#blogForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting via the browser
+
+        var formData = new FormData($('#blogForm')[0]); // Serialize the form data
+        $.ajax({
+            url: '{{ route('blogs.store') }}',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response['errors']);
+                if (response['status'] == true) {
+                    window.location.href = "{{ route('blogs.index') }}";
+                } else {
+                    if (response['errors']['title']) {
+                        $('#title').addClass('is-invalid').siblings('p').addClass(
+                                'invalid-feedback')
+                            .html(response['errors']['title']);
+                    } else {
+                        $('#title').removeClass('is-invalid').siblings('p').removeClass(
+                            'invalid-feedback').html("");
+                    }
+
+                    if (response['errors']['status']) {
+                        $('#status').addClass('is-invalid').siblings('p').addClass(
+                                'invalid-feedback')
+                            .html(response['errors']['status']);
+                    } else {
+                        $('#status').removeClass('is-invalid').siblings('p').removeClass(
+                            'invalid-feedback').html("");
+                    }
+
+                    if (response['errors']['description']) {
+                        $('#description').addClass('is-invalid').siblings('p').addClass(
+                                'invalid-feedback')
+                            .html(response['errors']['description']);
+                    } else {
+                        $('#description').removeClass('is-invalid').siblings('p').removeClass(
+                            'invalid-feedback').html("");
+                    }
+                    if (response['errors']['file']) {
+                        $('#file').addClass('is-invalid').siblings('p').addClass(
+                                'invalid-feedback')
+                            .html(response['errors']['file']);
+                    } else {
+                        $('#file').removeClass('is-invalid').siblings('p').removeClass(
+                            'invalid-feedback').html("");
+                    }
+                }
+
+            },
+            error: function(error) {
+                console.log('An error occurred.');
+                console.log(error);
+            }
+        });
+    });
+
+    var deleteId;
+
+    $('#blog-body').on('click', '.blog-delete', function() {
+        deleteId = $(this).attr('data-delete-id');
+        $('#deleteModal').modal('show');
+
+    });
+
+    $('#blogConfirmDeleteButton').click(function() {
+        $.ajax({
+            url: "{{ route('blogs.delete') }}",
+            type: "GET",
+            data: {
+                id: deleteId
+            },
+            success: function(response) {
+                window.location.href = "{{ route('blogs.index') }}";
+            }
+        });
+    });
+</script>
+
+<script>
     function deleteSkill(id) {
         $.ajax({
             url: "{{ route('deleteSkill') }}",
@@ -273,9 +371,7 @@
             }
         });
     }
-</script>
 
-<script>
     $(function() {
         CKEDITOR.replace('long_text');
     });

@@ -14,6 +14,8 @@ $current_url = $protocol . $server_name . $request_uri;
 // Output the current URL
 $url = explode('/', $current_url);
 
+// print_r($url);die;
+
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -99,7 +101,7 @@ $url = explode('/', $current_url);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link <?php echo $url[3] == 'user' ? 'active' : ''; ?>">
+                    <a href="{{ route('blogs.index')}}" class="nav-link <?php echo $url[3] == 'blogs' ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-blog"></i>
                         <p>
                             Blog
