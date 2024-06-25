@@ -51,14 +51,8 @@
                                             <td>{{ $blog->id }}</td>
                                             <td>{{ $blog->title }}</td>
                                             <td>{{ $blog->description }}</td>
-
-
                                             <td>
-                                                <?php if($blog->status == 1){?>
-                                                <i class="fas fa-check-circle text-success active"></i>
-                                                <?php } else {?>
-                                                <i class="fas fa-check-circle text-success active"></i>
-                                                <?php }?>
+                                                <i class='{{$blog->status == 1 ? "fas fa-check-circle text-success active" : "fas fa-minus"}}'></i>
                                             </td>
                                             <td>
                                                 <a href="{{ route('blogs.edit', $blog->id) }}" class="btn btn-info btn-edit"

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ImageContoller;
 use App\Http\Controllers\SideNavController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,4 +64,12 @@ Route::group(['middleware' => 'admin.auth'], function () {
     Route::post('blogs/store', [BlogController::class, 'store'])->name('blogs.store');
     Route::get('blogs/edit/{id}', [BlogController::class, 'create'])->name('blogs.edit');
     Route::get('blogs/delete', [BlogController::class, 'delete'])->name('blogs.delete');
+
+    // Crop Image
+    Route::get('image/create', [ImageContoller::class, 'ImageCreate'])->name('image.create');
+    Route::post('image/store', [ImageContoller::class, 'ImageCropAndStore'])->name('image.store');
+
+    // Resize Image
+    Route::get('image/resize-create', [ImageContoller::class, 'ResizeImageCreate'])->name('image.resize-create');
+    Route::post('image/resize-store', [ImageContoller::class, 'ResizeImageStore'])->name('image.resize-store');
 });

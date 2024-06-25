@@ -51,10 +51,14 @@
 
 <script src="{{ asset('dist/js/ckeditor/ckeditor.js') }}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  --}}
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
+
+<script type="text/javascript" src="https://unpkg.com/dropzone"></script>
+<script type="text/javascript" src="https://unpkg.com/cropperjs"></script>
 
 
 
@@ -354,6 +358,117 @@
             success: function(response) {
                 window.location.href = "{{ route('blogs.index') }}";
             }
+        });
+    });
+
+    var resize = $('#upload-demo').croppie({
+        enableExif: true,
+        enableOrientation: true,
+        viewport: {
+            width: 300,
+            height: 300,
+            type: 'circle'
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        }
+    });
+
+    $('#images').on('change', function() {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            resize.croppie('bind', {
+                url: e.target.result
+            }).then(function() {
+                console.log('success bind image');
+            });
+        }
+
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    $('.image-upload').on('click', function(ev) {
+        resize.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function(img) {
+            $.ajax({
+                url: '{{ route('image.store') }}',
+                type: "POST",
+                data: {
+                    "image": img
+                },
+                success: function(data) {
+                    html = '<img src="' + img + '" style="margin-left: -64px"/>';
+                    $('#show-crop-image').html(html);
+
+                }
+            })
+        })
+    });
+
+    var $modal = $('#modal');
+
+    var image = document.getElementById('sample_image');
+
+    var cropper;
+
+    $('#upload_image').change(function(event) {
+        var files = event.target.files;
+
+        var done = function(url) {
+            image.src = url;
+            $modal.modal('show');
+        };
+
+        if (files && files.length > 0) {
+            reader = new FileReader();
+            reader.onload = function(event) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+        }
+    });
+
+    $modal.on('shown.bs.modal', function() {
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 3,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function() {
+        cropper.destroy();
+        cropper = null;
+    });
+
+    $('#crop').click(function() {
+        canvas = cropper.getCroppedCanvas({
+            width: 400,
+            height: 400
+        });
+
+        canvas.toBlob(function(blob) {
+            url = URL.createObjectURL(blob);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+
+                var base64data = reader.result;
+                $.ajax({
+                    url: '{{ route('image.resize-store') }}',
+                    method: 'POST',
+                    data: {
+                        image: base64data
+                    },
+                    success: function(data) {
+                        console.log('response : ' + data);
+                        $modal.modal('hide');
+                        var path = "{{ asset('image') }}/" + data;
+                        $('#uploaded_image').attr('src', path);
+                    }
+                });
+            };
         });
     });
 </script>

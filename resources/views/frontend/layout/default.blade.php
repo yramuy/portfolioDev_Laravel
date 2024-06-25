@@ -8,6 +8,7 @@
             @include('frontend.layout.about')
             @include('frontend.layout.services')
             @include('frontend.layout.counter')
+            @include('frontend.layout.projects')
             @include('frontend.layout.Portfolio')
             @include('frontend.layout.Testimonials')
             @include('frontend.layout.Blog')
