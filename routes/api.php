@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('profileData', [ApiController::class, 'ProfileData'])->name('profileData');
+Route::post('login', [ApiController::class, 'login'])->name('login');
