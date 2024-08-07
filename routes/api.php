@@ -22,3 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('profileData', [ApiController::class, 'ProfileData'])->name('profileData');
 Route::post('login', [ApiController::class, 'login'])->name('login');
+Route::post('menus', [ApiController::class, 'menuData'])->name('menus');
+Route::get('screens', [ApiController::class, 'screenData'])->name('screens');
+Route::post('create-update-screen', [ApiController::class, 'createUpdateScreen'])->name('create-update-screen');
+Route::get('screens/{id}/edit', [ApiController::class, 'edit'])->name('screens.edit');
+Route::delete('screens/{id}', [ApiController::class, 'destroy'])->name('screens.destroy');
